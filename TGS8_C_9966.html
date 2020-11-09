@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugas Vue Basic 9966</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="vue.js"></script>
+</head>
+<body style="background-color:#68ced1;">
+    <div id="app">
+        <h1 style="text-align: center;">TO DO LIST</h1>
+        <div class="col-4 justify-content-center mx-auto h-100" style="overflow-y: auto;max-height: 380px;">
+            <div v-for="(todo,index) in todoList" :key="index">
+                <div class="card my-2">
+                    <div class="card-body">
+                        <span class="float-right"><button class="btn btn-sm" @click="hapus(index)">x</button></span>
+                        <span v-if="todo.prioritas=='Penting'" class="btn btn-outline-danger">{{ todo.prioritas }}</span>
+                        <span v-else-if="todo.prioritas=='Biasa'" class="btn btn-outline-primary">{{ todo.prioritas }}</span>
+                        <span v-else-if="todo.prioritas=='TidakPenting'" class="btn btn-outline-success">{{ todo.prioritas }}</span>
+                        <h4>{{todo.judul}}</h4>
+                        <p>{{todo.catatan}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="justify-content-center mx-auto mt-4">
+            <div class="card p-4">
+                <div class="form-group">
+                    <label for="judul"><strong>Task</strong> </label>
+                    <input type="text" placeholder="Nama task punyamu" class="form-control" id="judul" >
+                </div>
+                <div class="form-group">
+                    <label for="prioritas"><strong>Level Prioritas</strong> </label>
+                    <select name="prioritas"  id="prioritas" class="form-control" placeholder="Pilih prioritas">
+                        <option value="Penting">Penting</option>
+                        <option value="Biasa">Biasa</option>
+                        <option value="TidakPenting">Tidak Penting</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="catatan"><strong>Catatan</strong> </label>
+                    <textarea class="form-control" placeholder="Catatan tambahan disini...." id="catatan"></textarea>
+                </div>
+                <div>
+                    <button class="btn btn-success" @click="save">Simpan</button>
+                    <button class="btn btn-dark" @click="reset">Reset</button>
+                </div>
+            </div>
+        </div>
+        <footer class="text-center mt-5">
+            {{ data.nama }} | {{ data.npm }} | {{ data.kelas }}
+        </footer>
+    </div>
+</body>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            data: {
+                nama:'Albert Farizt Morana',
+                npm:'180709966',
+                kelas:'PAW-C',
+            },
+            todoList:[
+                
+            ],
+        },
+        methods: {
+            save() {
+                let judul = document.getElementById('judul');
+                let prioritas = document.getElementById('prioritas');
+                let catatan = document.getElementById('catatan');
+                let todo = {
+                    judul : judul.value,
+                    prioritas : prioritas.value,
+                    catatan : catatan.value,
+                }
+                document.getElementById('judul').value="";
+                document.getElementById('prioritas').value="";
+                document.getElementById('catatan').value="";
+                this.todoList.push(todo);
+                console.log(this.todoList);
+            },
+            reset(){
+                document.getElementById('judul').value="";
+                document.getElementById('prioritas').value="";
+                document.getElementById('catatan').value="";
+            },
+            hapus(index){
+                this.todoList.splice(index,1);
+            },
+        },
+    });
+</script>
+</html>
